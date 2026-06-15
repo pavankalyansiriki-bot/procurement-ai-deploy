@@ -11,7 +11,7 @@ from google.adk.agents import Agent
 from google.adk.tools import FunctionTool
 
 
-async def _tool_find_vendors(item_keyword: str, quantity: int, vendor_preference: str = None) -> dict[str, Any]:
+async def find_vendors(item_keyword: str, quantity: int, vendor_preference: str = None) -> dict[str, Any]:
     log.info(f"[ProcurementAgent] Finding vendors for: {item_keyword} x{quantity} (preferred: {vendor_preference})")
     vendors = await fetch_vendors_from_cap()
 
@@ -62,7 +62,7 @@ async def _tool_find_vendors(item_keyword: str, quantity: int, vendor_preference
     return result
 
 
-async def _tool_check_financial_sufficiency(department: str, required_amount: float) -> dict[str, Any]:
+async def check_financial_sufficiency(department: str, required_amount: float) -> dict[str, Any]:
     log.info(f"[FinancialAgent] Checking ${required_amount} for {department}")
     budget = await fetch_budget_from_cap(department)
 
@@ -98,7 +98,7 @@ async def _tool_check_financial_sufficiency(department: str, required_amount: fl
     return result
 
 
-async def _tool_make_budget_decision(
+async def make_budget_decision(
     vendor_name: str,
     item_description: str,
     quantity: int,
@@ -197,7 +197,7 @@ RULES:
 - If the request is not about buying/procuring something, say: 'Not a procurement request'
 
 OUTPUT FORMAT: Always end with a clear vendor recommendation. Include the vendor name, pricing, and lead time.""",
-        tools=[FunctionTool(func=_tool_find_vendors)]
+        tools=[FunctionTool(func=find_vendors)]
     )
 
     financial_agent = Agent(
@@ -216,7 +216,7 @@ RULES:
 - Be precise with numbers — always show exact dollar amounts
 
 OUTPUT FORMAT: Clear SUFFICIENT or INSUFFICIENT verdict with numbers.""",
-        tools=[FunctionTool(func=_tool_check_financial_sufficiency)]
+        tools=[FunctionTool(func=check_financial_sufficiency)]
     )
 
     budget_agent = Agent(
@@ -235,7 +235,7 @@ RULES:
 - Rejection reasons must be actionable — what can be done to get it approved?
 
 OUTPUT FORMAT: Start with APPROVED or REJECTED in caps, then detailed reasoning.""",
-        tools=[FunctionTool(func=_tool_make_budget_decision)]
+        tools=[FunctionTool(func=make_budget_decision)]
     )
 
     return procurement_agent, financial_agent, budget_agent

@@ -11,9 +11,9 @@ from schemas import ProcurementRequest
 from cap_client import fetch_vendors_from_cap
 from agents import (
     build_adk_agents,
-    _tool_find_vendors,
-    _tool_check_financial_sufficiency,
-    _tool_make_budget_decision,
+    find_vendors,
+    check_financial_sufficiency,
+    make_budget_decision,
 )
 
 log = logging.getLogger("procurement-ai.orchestrator")
@@ -110,7 +110,7 @@ async def run_multi_agent_pipeline(request: ProcurementRequest) -> dict:
     procurement_adk_text = await _run_adk_agent(procurement_agent, session_id, procurement_prompt)
     
     # Pass the validated vendor_preference to the backend database/SAP tool
-    vendor_data = await _tool_find_vendors(item, quantity, vendor_preference=vendor_preference)
+    vendor_data = await find_vendors(item, quantity, vendor_preference=vendor_preference)
 
     proc_step = {
         "agent": "ProcurementAgent",
@@ -133,7 +133,7 @@ async def run_multi_agent_pipeline(request: ProcurementRequest) -> dict:
         "Use the check_financial_sufficiency tool and return a precise verdict."
     )
     financial_adk_text = await _run_adk_agent(financial_agent, session_id, financial_prompt)
-    financial_data = await _tool_check_financial_sufficiency(request.department, vendor_data["total_amount"])
+    financial_data = await check_financial_sufficiency(request.department, vendor_data["total_amount"])
 
     fin_step = {
         "agent": "FinancialAgent",
@@ -159,7 +159,7 @@ async def run_multi_agent_pipeline(request: ProcurementRequest) -> dict:
         "Use the make_budget_decision tool and explain the final decision."
     )
     budget_adk_text = await _run_adk_agent(budget_agent, session_id, budget_prompt)
-    budget_data = await _tool_make_budget_decision(
+    budget_data = await make_budget_decision(
         vendor_name=vendor_data["best_vendor_name"],
         item_description=item,
         quantity=quantity,

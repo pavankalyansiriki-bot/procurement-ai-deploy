@@ -1,0 +1,5 @@
+ID,department,fiscalYear,totalBudget,spentAmount,reservedAmount,currency,approvalLimit
+"b001","IT Department",2025,150000.00,45000.00,10000.00,"USD",15000.00
+"b002","Operations",2025,80000.00,32000.00,5000.00,"USD",10000.00
+"b003","HR Department",2025,50000.00,18000.00,2000.00,"USD",5000.00
+"b004","Finance",2025,60000.00,25000.00,3000.00,"USD",8000.00

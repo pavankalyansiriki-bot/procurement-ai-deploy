@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: procurement-ai
+    runtime: docker
+    plan: free
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: APP_SECRET
+        sync: false
+      - key: CAP_BASE_URL
+        value: http://localhost:4004

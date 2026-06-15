@@ -1,0 +1,11 @@
+ID,vendorCode,name,category,unitPrice,currency,minOrderQty,maxOrderQty,leadTimeDays,rating,isActive,contactEmail,country
+"v001","V001","Dell Technologies","Electronics",850.00,"USD",1,500,7,4.8,true,"sales@dell.com","USA"
+"v002","V002","HP Inc","Electronics",780.00,"USD",1,300,5,4.6,true,"sales@hp.com","USA"
+"v003","V003","Lenovo Group","Electronics",720.00,"USD",5,400,10,4.5,true,"sales@lenovo.com","China"
+"v004","V004","Apple Inc","Electronics",1200.00,"USD",1,200,14,4.9,true,"sales@apple.com","USA"
+"v005","V005","Microsoft Surface","Electronics",950.00,"USD",1,250,7,4.7,true,"sales@microsoft.com","USA"
+"v006","V006","OfficeMax Supplies","Office",45.00,"USD",10,1000,3,4.2,true,"orders@officemax.com","USA"
+"v007","V007","Steelcase Furniture","Furniture",350.00,"USD",2,100,21,4.4,true,"sales@steelcase.com","USA"
+"v008","V008","Samsung Electronics","Electronics",820.00,"USD",1,300,8,4.6,true,"b2b@samsung.com","South Korea"
+"v009","V009","Acer Inc","Electronics",650.00,"USD",5,500,12,4.1,true,"sales@acer.com","Taiwan"
+"v010","V010","ASUS","Electronics",700.00,"USD",5,400,10,4.3,true,"b2b@asus.com","Taiwan"

@@ -1,0 +1,6 @@
+fastapi==0.136.3
+uvicorn[standard]==0.39.0
+pydantic==2.13.4
+httpx==0.28.1
+python-dotenv==1.0.1
+google-adk==2.2.0

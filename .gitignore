@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+backend/.env
+
+# Node
+node_modules/
+npm-debug.log*
+
+# SQLite databases (generated at build time)
+cap_backend/procurement.db
+cap_backend/procurement.db-shm
+cap_backend/procurement.db-wal
+
+# Logs
+*.log

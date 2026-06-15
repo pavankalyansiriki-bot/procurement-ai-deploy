@@ -3,7 +3,7 @@ import os
 from typing import Any
 
 from cap_client import fetch_vendors_from_cap, fetch_budget_from_cap
-from config import GEMINI_API_KEY
+from config import GEMINI_API_KEY, GEMINI_MODEL
 
 log = logging.getLogger("procurement-ai.agents")
 
@@ -182,7 +182,7 @@ def build_adk_agents():
 
     procurement_agent = Agent(
         name="ProcurementAgent",
-        model="gemini-3.5-flash",
+        model=GEMINI_MODEL,
         description="Finds and recommends vendors for procurement requests",
         instruction="""You are a SAP Procurement Specialist agent.
 Your ONLY job: find the best vendor for the requested item.
@@ -202,7 +202,7 @@ OUTPUT FORMAT: Always end with a clear vendor recommendation. Include the vendor
 
     financial_agent = Agent(
         name="FinancialAgent",
-        model="gemini-3.5-flash",
+        model=GEMINI_MODEL,
         description="Checks financial sufficiency and budget availability",
         instruction="""You are a SAP Financial Analysis agent.
 Your ONLY job: check if there is enough budget for the requested purchase.
@@ -221,7 +221,7 @@ OUTPUT FORMAT: Clear SUFFICIENT or INSUFFICIENT verdict with numbers.""",
 
     budget_agent = Agent(
         name="BudgetAgent",
-        model="gemini-3.5-flash",
+        model=GEMINI_MODEL,
         description="Makes final APPROVE or REJECT decision with detailed feedback",
         instruction="""You are a SAP Budget Controller agent.
 Your ONLY job: make the final APPROVE or REJECT decision.

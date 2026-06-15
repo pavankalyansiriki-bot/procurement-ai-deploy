@@ -337,6 +337,17 @@ async function submitRequest(){
     }
 
     const data = await resp.json();
+
+    if(!resp.ok){
+      showResult({
+        decision: 'ERROR',
+        summary: data.detail || `Request failed with status ${resp.status}`,
+        guardrail_hit: false,
+        agent_steps: [{agent:'Pipeline', result:'ERROR', details: data.detail || `HTTP ${resp.status}`}]
+      });
+      return;
+    }
+
     showResult(data);
 
   } catch(e){
@@ -355,7 +366,7 @@ function showResult(data){
   // Card style
   card.className = 'result-card';
   if(decision === 'APPROVED') card.classList.add('approved');
-  else if(decision === 'REJECTED') card.classList.add('rejected');
+  else if(decision === 'REJECTED' || decision === 'ERROR') card.classList.add('rejected');
   else card.classList.add('guardrail');
   card.style.display = 'block';
 
@@ -367,6 +378,9 @@ function showResult(data){
   } else if(decision === 'REJECTED'){
     badge.className = 'decision-badge db-rejected';
     badge.textContent = '❌  REJECTED';
+  } else if(decision === 'ERROR'){
+    badge.className = 'decision-badge db-rejected';
+    badge.textContent = '⚠️  ERROR';
   } else {
     badge.className = 'decision-badge db-guardrail';
     badge.textContent = '🚫  ' + decision;
